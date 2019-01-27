@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Media.Imaging;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using MySql.Data.MySqlClient;
+using System.Windows.Media;
 
 namespace Bataille_navale
 {
@@ -33,10 +37,12 @@ namespace Bataille_navale
             {
                 m_connection.Open();
                 m_state_connection = true;
+                Console.WriteLine("Connection bdd ok!");
             }
-            catch
+            catch(Exception e)
             {
                 m_state_connection = false;
+                Console.WriteLine("Erreur connection bdd : " + e.Message);
             }
             return m_state_connection;
         }
@@ -82,26 +88,32 @@ namespace Bataille_navale
             return state;
         }
 
-        public List<string> getDictPlayer(string username)
+        public Dictionary<string, string> getDictPlayer(string name_player)
         {
             connection();
-            List<string> list_player = new List<string>();
+            Dictionary<string, string> dict_player = new Dictionary<string, string>();
             try
             {
-                String sql = String.Format("SELECT taux FROM users WHERE username = {0}", username);
+                String sql = "SELECT * FROM users WHERE username = '" + name_player + "'";
                 MySqlCommand cmd = new MySqlCommand(sql, m_connection);
                 MySqlDataReader read = cmd.ExecuteReader();
-                list_player.Add(read.GetString("id"));
-                list_player.Add(read.GetString("username"));
-                list_player.Add(read.GetString("password"));
-                list_player.Add(read.GetString("grade"));
+                while (read.Read())
+                {
+                    dict_player["id"] = (string) read.GetString("id");
+                    dict_player["username"] = (string) read.GetString("username");
+                    dict_player["password"] = (string) read.GetString("password");
+                    dict_player["grade"] = (string) read.GetString("grade");
+                    dict_player["profil"] = (string) read.GetString("profil");
+                }
                 read.Close();
                 deconnection();
-                return list_player;
+                return dict_player;
             }
-            catch
+            catch(Exception e)
             {
-                return list_player;
+                Console.WriteLine("Message erreur get : " + e.Message);
+                deconnection();
+                return dict_player;
             }
         }
     }

@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Bataille_navale"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -17,9 +18,43 @@
             <Setter Property="Height" Value="20"/>
             <Setter Property="Width" Value="100"/>
         </Style>
+        <Style x:Key="PasswordBox_connexion" TargetType="PasswordBox">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Width" Value="100"/>
+        </Style>
         <Style x:Key="Button_connexion" TargetType="Button">
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="Rectangle_boat" TargetType="Rectangle">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Width" Value="140"/>
+            <Setter Property="Stroke" Value="Black"/>
+        </Style>
+        <Style x:Key="Button_boat" TargetType="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Background" Value="#FF514F4F"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="0,10"/>
+        </Style>
+        <Style x:Key="Icon_boat" TargetType="materialDesign:PackIcon">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="Green" />
+            <Setter Property="Kind" Value="Boat"/>
+        </Style>
+        <Style x:Key="Label_number" TargetType="Label">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
     </Window.Resources>
     <Grid>
@@ -30,9 +65,13 @@
             <RowDefinition Height="59*"/>
             <RowDefinition Height="541*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Column="1" Background="Gray">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
-
+        <Grid Background="#444444" Panel.ZIndex="1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0">
+                <Ellipse Name="ellipse" Stroke="White" Width="40" Height="40" Margin="0,0,0,1" Visibility="Visible">
+                    <Ellipse.Fill>
+                        <ImageBrush x:Name="image_profil"  Stretch="Fill"/>
+                    </Ellipse.Fill>
+                </Ellipse>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2" Background="White">
@@ -53,11 +92,11 @@
                 </Grid>
                 <Grid Grid.Column="1" Grid.Row="1">
                     <Label Style="{StaticResource Label_Connexion}" Name="Identifiant" Content="Identifiant"/>
-                    <TextBox Style="{StaticResource TextBox_connexion}" Name="user_id" TextChanged="User_id_TextChanged"/>
+                    <TextBox Style="{StaticResource TextBox_connexion}" Name="user_name" TextChanged="User_id_TextChanged"/>
                 </Grid>
                 <Grid Grid.Column="1" Grid.Row="2">
                     <Label Style="{StaticResource Label_Connexion}" Name="Motdepasse" Content="Mot de passe"/>
-                    <TextBox Style="{StaticResource TextBox_connexion}" Name="password" TextChanged="Password_TextChanged"/>
+                    <PasswordBox Style="{StaticResource PasswordBox_connexion}" Name="password" />
                 </Grid>
                 <Grid Grid.Column="1" Grid.Row="3">
                     <Grid.ColumnDefinitions>
@@ -90,10 +129,173 @@
                             <Button Style="{StaticResource Button_connexion}" Name="Inscription" Content="Inscription" VerticalAlignment="Top" Margin="0,6,0,0" Click="Inscription_Click"/>
                         </Grid>
                     </Grid>
+                    <Grid Grid.Row="2">
+                        <Label Name="Label_erreur" Foreground="Red" VerticalContentAlignment="Center" HorizontalAlignment="Center"/>
+                    </Grid>
                 </Grid>
             </Grid>
             <Grid Name="Game" Visibility="Hidden">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="180"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Background="Gray" Margin="0,-14,0,0">
+                    <StackPanel Grid.Row="1" Margin="10">
+                        <Button Style="{StaticResource Button_boat}" Name="porte_avion">
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label HorizontalAlignment="Left" Content="Porte avion" FontSize="12" Foreground="White"/>
+                                    <materialDesign:PackIcon Name="Boat_avion_1" Style="{StaticResource Icon_boat}"/>
+                                    <materialDesign:PackIcon Name="Boat_avion_2" Style="{StaticResource Icon_boat}"/>
+                                    <materialDesign:PackIcon Name="Boat_avion_3" Style="{StaticResource Icon_boat}"/>
+                                    <materialDesign:PackIcon Name="Boat_avion_4" Style="{StaticResource Icon_boat}"/>
+                                    <materialDesign:PackIcon Name="Boat_avion_5" Style="{StaticResource Icon_boat}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+                        <Button Style="{StaticResource Button_boat}" Name="croiseur">
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label HorizontalAlignment="Left" Content="Croiseur" FontSize="12" Foreground="White"/>
+                                    <materialDesign:PackIcon Name="Boat_croiseur_1" Style="{StaticResource Icon_boat}"/>
+                                    <materialDesign:PackIcon Name="Boat_croiseur_2" Style="{StaticResource Icon_boat}"/>
+                                    <materialDesign:PackIcon Name="Boat_croiseur_3" Style="{StaticResource Icon_boat}"/>
+                                    <materialDesign:PackIcon Name="Boat_croiseur_4" Style="{StaticResource Icon_boat}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+                        <Button Style="{StaticResource Button_boat}" Name="sous_marin_1">
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label HorizontalAlignment="Left" Content="Sous-marin" FontSize="12" Foreground="White"/>
+                                    <materialDesign:PackIcon Name="Boat_marin_1_1" Style="{StaticResource Icon_boat}"/>
+                                    <materialDesign:PackIcon Name="Boat_marin_1_2" Style="{StaticResource Icon_boat}"/>
+                                    <materialDesign:PackIcon Name="Boat_marin_1_3" Style="{StaticResource Icon_boat}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+                        <Button Style="{StaticResource Button_boat}" Name="sous_marin_2">
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label HorizontalAlignment="Left" Content="Sous-marin" FontSize="12" Foreground="White"/>
+                                    <materialDesign:PackIcon Name="Boat_marin_2_1" Style="{StaticResource Icon_boat}"/>
+                                    <materialDesign:PackIcon Name="Boat_marin_2_2" Style="{StaticResource Icon_boat}"/>
+                                    <materialDesign:PackIcon Name="Boat_marin_2_3" Style="{StaticResource Icon_boat}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+                        <Button Style="{StaticResource Button_boat}" Name="torpilleur">
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label HorizontalAlignment="Left" Content="Sous-marin" FontSize="12" Foreground="White"/>
+                                    <materialDesign:PackIcon Name="Boat_torpilleur_2_1" Style="{StaticResource Icon_boat}"/>
+                                    <materialDesign:PackIcon Name="Boat_torpilleur_2_2" Style="{StaticResource Icon_boat}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <!-- Les lettres -->
+                    <Border Grid.Row="0" Grid.Column="3" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="1"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="4" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="2"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="5" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="3"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="6" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="4"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="7" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="5"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="8" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="6"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="9" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="7"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="10" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="8"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="11" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="9"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="12" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="10"/>
+                    </Border>
+                    <!-- Les chiffres -->
 
+                    <Border Grid.Row="1" Grid.Column="2" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="A"/>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="2" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="B"/>
+                    </Border>
+                    <Border Grid.Row="3" Grid.Column="2" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="C"/>
+                    </Border>
+                    <Border Grid.Row="4" Grid.Column="2" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="D"/>
+                    </Border>
+                    <Border Grid.Row="5" Grid.Column="2" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="E"/>
+                    </Border>
+                    <Border Grid.Row="6" Grid.Column="2" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="F"/>
+                    </Border>
+                    <Border Grid.Row="7" Grid.Column="2" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="G"/>
+                    </Border>
+                    <Border Grid.Row="8" Grid.Column="2" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="H"/>
+                    </Border>
+                    <Border Grid.Row="9" Grid.Column="2" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="I"/>
+                    </Border>
+                    <Border Grid.Row="10" Grid.Column="2" BorderThickness="1" BorderBrush="Black">
+                        <Label Style="{StaticResource Label_number}" Content="J"/>
+                    </Border>
+                </Grid>
+            </Grid>
+            <Grid Name="Account" Visibility="Hidden">
+                
             </Grid>
         </Grid>
     </Grid>
