@@ -54,29 +54,23 @@ namespace Bataille_navale
                     {
                         SESSION = m_sql.getDictPlayer(user_name.Text);
                         if (SESSION["password"].Equals(password.Password.ToString()))
-                        {
-                            Console.WriteLine("Ok !");
                             change_grid(Account);
-                            BitmapImage bi3 = new BitmapImage();
-                            bi3.BeginInit();
-                            bi3.UriSource = new Uri(SESSION["profil"], UriKind.Relative);
-                            bi3.EndInit();
-                            image_profil.Stretch = Stretch.Fill;
-                            image_profil.ImageSource = bi3;
-                        }
                         else
-                        {
-                            Label_erreur.Content = "Erreur d'authentification !";
-                        }
+                            setErrorMessage("Erreur d'authentification !");
                     }
                     catch
                     {
-                        Label_erreur.Content = "Le joueur " + user_name.Text + " n'éxiste pas !";
+                        setErrorMessage("Le joueur " + user_name.Text + " n'éxiste pas !");
                     }
                 }
-                else Label_erreur.Content = "Champ identifiant vide";
+                else setErrorMessage("Champ identifiant vide");
             }
-            else Label_erreur.Content = "Champ mot de passe vide";
+            else setErrorMessage("Champ mot de passe vide");
+        }
+
+        private void setErrorMessage(String msg)
+        {
+            Label_erreur.Content = msg;
         }
 
         private void Mdp_Perdu_Click(object sender, RoutedEventArgs e)

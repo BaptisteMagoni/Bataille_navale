@@ -67,7 +67,7 @@
         </Grid.RowDefinitions>
         <Grid Background="#444444" Panel.ZIndex="1">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0">
-                <Ellipse Name="ellipse" Stroke="White" Width="40" Height="40" Margin="0,0,0,1" Visibility="Visible">
+                <Ellipse Name="ellipse" Stroke="White" Width="40" Height="40" Margin="0,0,0,1" Visibility="Hidden">
                     <Ellipse.Fill>
                         <ImageBrush x:Name="image_profil"  Stretch="Fill"/>
                     </Ellipse.Fill>

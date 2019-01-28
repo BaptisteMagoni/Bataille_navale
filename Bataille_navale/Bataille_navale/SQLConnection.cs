@@ -41,6 +41,7 @@ namespace Bataille_navale
             }
             catch(Exception e)
             {
+
                 m_state_connection = false;
                 Console.WriteLine("Erreur connection bdd : " + e.Message);
             }
@@ -111,7 +112,7 @@ namespace Bataille_navale
             }
             catch(Exception e)
             {
-                Console.WriteLine("Message erreur get : " + e.Message);
+                Console.WriteLine("Message erreur get info player : " + e.Message);
                 deconnection();
                 return dict_player;
             }
